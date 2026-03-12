@@ -26,31 +26,34 @@ export default function BookList() {
       });
   }, []);
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Id</th>
-          <th>Name</th>
-          <th>Author Name</th>
-          <th>Publisher</th>
-          <th>Edition</th>
-          <th>Category</th>
-          <th>Stock</th>
-        </tr>
-      </thead>
-      <tbody>
-        {bookList.map((b) => (
-          <tr key={b.id}>
-            <td>{b.id}</td>
-            <td>{b.name}</td>
-            <td>{b.authorName}</td>
-            <td>{b.publisher}</td>
-            <td>{b.edition}</td>
-            <td>{b.categoryName}</td>
-            <td>{b.stock}</td>
+    <div className="container mx-auto p-4">
+      <h1 className="text-3xl font-bold mb-6 text-center">Book List</h1>
+      <table className="min-w-full table-auto border-collapse">
+        <thead className="bg-gray-100">
+          <tr>
+            <th className="py-2 px-4 border-b text-left">Id</th>
+            <th className="py-2 px-4 border-b text-left">Name</th>
+            <th className="py-2 px-4 border-b text-left">Author Name</th>
+            <th className="py-2 px-4 border-b text-left">Publisher</th>
+            <th className="py-2 px-4 border-b text-left">Edition</th>
+            <th className="py-2 px-4 border-b text-left">Category</th>
+            <th className="py-2 px-4 border-b text-left">Stock</th>
           </tr>
-        ))}
-      </tbody>
-    </table>
+        </thead>
+        <tbody>
+          {bookList.map((b) => (
+            <tr key={b.id} className="hover:bg-gray-50">
+              <td className="py-2 px-4 border-b">{b.id}</td>
+              <td className="py-2 px-4 border-b">{b.name}</td>
+              <td className="py-2 px-4 border-b">{b.authorName}</td>
+              <td className="py-2 px-4 border-b">{b.publisher}</td>
+              <td className="py-2 px-4 border-b">{b.edition}</td>
+              <td className="py-2 px-4 border-b">{b.categoryName}</td>
+              <td className="py-2 px-4 border-b">{b.stock}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
   );
 }
