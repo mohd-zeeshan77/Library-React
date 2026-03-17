@@ -4,6 +4,7 @@ import BookList from "./features/books";
 import Home from "./features/home";
 import UserList from "./features/users";
 import IssuedBookList from "./features/issuedbooks";
+import CategoryList from "./features/categories";
 
 export default function App() {
   return (
@@ -18,6 +19,10 @@ export default function App() {
             Users
           </Link>
           |
+          <Link to="/categories" className="text-white!">
+            Categories List
+          </Link>
+          |
           <Link to="/issued" className="text-white!">
             Issued Books
           </Link>
@@ -28,6 +33,7 @@ export default function App() {
         <Route path="/books" element={<BookList />} />
         <Route path="/users" element={<UserList />} />
         <Route path="/issued" element={<IssuedBookList />} />
+        <Route path="/categories" element={<CategoryList />} />
       </Routes>
     </div>
   );
