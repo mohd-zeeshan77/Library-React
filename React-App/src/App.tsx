@@ -30,10 +30,10 @@ export default function App() {
       </nav>
       <Routes>
         <Route index element={<Home />} />
-        <Route path="/books" element={<BookList />} />
+        <Route path="/books/*" element={<BookList />} />
         <Route path="/users" element={<UserList />} />
         <Route path="/issued" element={<IssuedBookList />} />
-        <Route path="/categories" element={<CategoryList />} />
+        <Route path="/categories/*" element={<CategoryList />} />
       </Routes>
     </div>
   );
