@@ -28,3 +28,13 @@ export function useNewBookMutation() {
     },
   });
 }
+const CATEGORIES_KEY = ["@categories"];
+
+export function useCategoriesForBooksQuery() {
+  return useQuery({
+    queryKey: CATEGORIES_KEY,
+    queryFn: async () => {
+      return await ApiService.get<Master.CategoryItem[]>("categories");
+    },
+  });
+}
