@@ -3,7 +3,7 @@ import { useCategoriesForBooksQuery } from "../queries";
 import { useStateForm } from "./state.form";
 
 interface FormProps {
-  onSubmit: (p: Master.BookForm) => Promise<void>;
+  onSubmit: (p: Master.BookForm & { categoryId: number }) => Promise<void>;
   onLoad?: () => Promise<Master.BookItem>;
   submitCaption: string;
 }
@@ -12,21 +12,28 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
   const { get, handleSubmit, submitting, errors } = useStateForm(onLoad);
   const navigate = useNavigate();
 
-  // Fetch categories for dropdown
   const { data: categories = [], isLoading: loadingCategories } =
     useCategoriesForBooksQuery();
-
-  const categoryOptions = categories.map((c) => c.name);
 
   return (
     <div className="w-full max-w-xs">
       <form
         className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
         onSubmit={handleSubmit(async (data) => {
-          await onSubmit(data);
+          const selectedCategory = categories.find(
+            (c) => c.name === data.categoryName,
+          );
+
+          if (!selectedCategory) {
+            throw new Error("Please select a valid category");
+          }
+
+          await onSubmit({ ...data, categoryId: selectedCategory.id });
+
           navigate("../list");
         })}
       >
+        {/* Name */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Name
@@ -41,6 +48,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
+        {/* Author */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Author Name
@@ -55,6 +63,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
+        {/* Publisher */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Publisher
@@ -69,6 +78,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
+        {/* Edition */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Edition
@@ -83,6 +93,23 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
+        {/* Price */}
+        <div className="mb-4">
+          <label className="block text-gray-700 text-sm font-bold mb-2">
+            Price
+          </label>
+          <input
+            type="number"
+            step="0.01"
+            {...get("price").control.register(get("price").name)}
+            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          />
+          {errors.price && (
+            <div className="text-red-500">{errors.price.message}</div>
+          )}
+        </div>
+
+        {/* Category Dropdown */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Category
@@ -97,9 +124,9 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
               className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             >
               <option value="">Select Category</option>
-              {categoryOptions.map((cat) => (
-                <option key={cat} value={cat}>
-                  {cat}
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.name}>
+                  {cat.name}
                 </option>
               ))}
             </select>
@@ -109,6 +136,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
+        {/* Stock */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Stock
@@ -123,6 +151,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
+        {/* Submit */}
         <button
           type="submit"
           disabled={submitting}

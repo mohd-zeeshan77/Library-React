@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 
-// Validation schema for BookForm
 const schema = Joi.object({
   name: Joi.string().required().min(1).max(100).messages({
     "string.empty": "Book name is required",
@@ -21,9 +20,10 @@ const schema = Joi.object({
   edition: Joi.string().required().min(1).max(50).messages({
     "string.empty": "Edition is required",
   }),
-  price: Joi.number().required().min(0).messages({
+  price: Joi.number().precision(2).required().min(0).messages({
     "number.base": "Price must be a number",
     "number.min": "Price cannot be negative",
+    "number.precision": "Price can have up to 2 decimal places",
   }),
   categoryName: Joi.string().required().messages({
     "string.empty": "Category is required",
@@ -48,7 +48,6 @@ export function useStateForm(onLoad?: () => Promise<Master.BookItem>) {
     resolver: joiResolver(schema),
   });
 
-  // If editing an existing book, populate the form
   useEffect(() => {
     if (onLoad) {
       onLoad().then((data) => {

@@ -13,17 +13,26 @@ export function useBooksQuery() {
 }
 export function useNewBookMutation() {
   const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: async (book: Master.BookForm) =>
-      await ApiService.post<Master.BookItem>("books", book),
+    mutationFn: async ({
+      categoryId,
+      book,
+    }: {
+      categoryId: number;
+      book: Master.BookForm;
+    }) =>
+      await ApiService.post<Master.BookItem>(
+        `books/category/${categoryId}`,
+        book,
+      ),
+
     onSuccess: (result) => {
-      if (!result) {
-        return;
-      }
+      if (!result) return;
+
       const existing = queryClient.getQueryData<Master.BookItem[]>(QUERY_KEY);
-      if (!existing) {
-        return;
-      }
+      if (!existing) return;
+
       queryClient.setQueryData(QUERY_KEY, [...existing, result]);
     },
   });
