@@ -4,10 +4,12 @@ import Create from "./pages/Create";
 
 export default function Categories() {
   return (
-    <Routes>
-      <Route index element={<Navigate to="list" />} />
-      <Route path="list" element={<List />} />
-      <Route path="create" element={<Create />} />
-    </Routes>
+    <div className="flex justify-center items-center min-h-[80vh]">
+      <Routes>
+        <Route index element={<Navigate to="list" />} />
+        <Route path="list" element={<List />} />
+        <Route path="create" element={<Create />} />
+      </Routes>
+    </div>
   );
 }

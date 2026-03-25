@@ -46,7 +46,7 @@ export default function TextBox<TForm extends FieldValues>(
                   type="text"
                   placeholder={props.placeholder}
                   {...p.field}
-                  value={p.field.value ?? ""} // ✅ key fix
+                  value={p.field.value ?? ""}
                 />
                 <div className="text-red-500">
                   {p.fieldState.error?.message}

@@ -25,8 +25,14 @@ export default function Form({ onLoad, onSubmit, ...props }: FormProps) {
         })}
       >
         <TextBox label="Name" {...get("name")} />
-
-        <Button caption={props.submitCaption} disabled={submitting} />
+        <div className="flex justify-between">
+          <Button
+            caption="Back"
+            type="button"
+            onClick={() => navigate("../list")}
+          />
+          <Button caption={props.submitCaption} disabled={submitting} />
+        </div>
       </form>
     </div>
   );

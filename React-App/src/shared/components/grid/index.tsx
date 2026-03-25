@@ -13,12 +13,15 @@ interface GridProps<T> {
 }
 export function Grid<T>(props: GridProps<T>) {
   return (
-    <div className="container mx-auto p-4">
-      <table className="min-w-full table-auto border-collapse">
-        <thead className="bg-linear-to-r from-blue-600 to-purple-800 p-4 px-4">
+    <div className="flex container mx-auto p-4 justify-center bg-yellow-100 border-yellow-900">
+      <table className="w-auto min-w-150 border border-yellow-900 border-collapse bg-yellow-100">
+        <thead className="bg-linear-to-r from-yellow-900 to-yellow-800 p-4 px-4 ">
           <tr>
             {props.columns.map((c) => (
-              <th key={nanoid()} className="py-2 px-4 border-b text-left">
+              <th
+                key={nanoid()}
+                className="py-2 px-4 border-b text-left text-white"
+              >
                 {c.header}
               </th>
             ))}

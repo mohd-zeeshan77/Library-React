@@ -18,4 +18,16 @@ declare namespace Master {
   interface CategoryItem extends CategoryForm {
     id: number;
   }
+
+  interface UserForm {
+    name: string;
+    typeName: string;
+  }
+  interface UserItems extends UserForm {
+    id: number;
+  }
+  interface MemberTypeDto {
+    id: number;
+    name: string;
+  }
 }

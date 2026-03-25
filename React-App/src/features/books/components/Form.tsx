@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router";
 import { useCategoriesForBooksQuery } from "../queries";
 import { useStateForm } from "./state.form";
+import { Button } from "../../../shared/components/buttons";
 
 interface FormProps {
   onSubmit: (p: Master.BookForm & { categoryId: number }) => Promise<void>;
@@ -23,14 +24,12 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           const selectedCategory = categories.find(
             (c) => c.name === data.categoryName,
           );
-
           if (!selectedCategory) {
             throw new Error("Please select a valid category");
           }
 
           await onSubmit({ ...data, categoryId: selectedCategory.id });
-
-          navigate("../list");
+          navigate("../list"); // redirect after submit
         })}
       >
         {/* Name */}
@@ -100,7 +99,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           </label>
           <input
             type="number"
-            step="0.01"
+            step="0.01" // allows 2 decimal places
             {...get("price").control.register(get("price").name)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
@@ -109,7 +108,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
-        {/* Category Dropdown */}
+        {/* Category */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Category
@@ -151,14 +150,15 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
-        {/* Submit */}
-        <button
-          type="submit"
-          disabled={submitting}
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline disabled:opacity-50"
-        >
-          {submitCaption}
-        </button>
+        {/* Buttons */}
+        <div className="flex justify-between">
+          <Button
+            caption="Back"
+            type="button"
+            onClick={() => navigate("../list")}
+          />
+          <Button caption={submitCaption} type="submit" disabled={submitting} />
+        </div>
       </form>
     </div>
   );
