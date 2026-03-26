@@ -12,97 +12,75 @@ function formatDate(dateString: string | null) {
   const year = date.getFullYear();
   return `${day}-${month}-${year}`;
 }
+
 export default function List() {
   const navigate = useNavigate();
   const { data = [], isLoading } = useIssuedQuery();
+
   const formattedData = data.map((item: Master.IssuedItem) => ({
-    ...item,
+    ...item, // keep bookId and userId
     issuedDate: formatDate(item.issuedDate),
     returnDate: formatDate(item.returnDate),
     renewDate: formatDate(item.renewDate),
-    renewStatus:
+    renewStatusText:
       item.renewStatus === null
         ? "-"
         : item.renewStatus
           ? "Renewed"
           : "Not Renewed",
-
-    isReturned:
+    isReturnedText:
       item.isReturned === null
         ? "-"
         : item.isReturned
           ? "Returned"
           : "Not Returned",
-
     dues: item.dues ?? "-",
   }));
 
-  if (isLoading) {
-    return <Loader />;
-  }
-
-  if (data.length === 0) {
-    return <div>No Issued Books found.</div>;
-  }
+  if (isLoading) return <Loader />;
+  if (!formattedData.length) return <div>No Issued Books found.</div>;
 
   return (
-    <div className="max-w-6x1 mx-auto mt-6">
+    <div className="max-w-6xl mx-auto mt-6">
       <div className="flex items-center justify-between mb-4">
-        <div>
-          <h2 className="text-3xl font-bold text-yellow-900"> Issued Books</h2>
-        </div>
+        <h2 className="text-3xl font-bold text-yellow-900">Issued Books</h2>
         <Button
           caption="Add New Issued Book"
           onClick={() => navigate("../create")}
         />
       </div>
-      <div>
-        <grid.Grid
-          data={formattedData}
-          columns={[
-            {
-              field: "id",
-              header: "ID",
-            },
-            {
-              field: "userName",
-              header: "Member Name",
-            },
-            {
-              field: "userType",
-              header: "Membership Type",
-            },
-            {
-              field: "bookName",
-              header: "Book Name",
-            },
-            {
-              field: "issuedDate",
-              header: "Issued Date",
-            },
-            {
-              field: "returnDate",
-              header: "Return Date",
-            },
-            {
-              field: "renewStatus",
-              header: "Renew Status",
-            },
-            {
-              field: "renewDate",
-              header: "Renew Date",
-            },
-            {
-              field: "isReturned",
-              header: "Returned Status",
-            },
-            {
-              field: "dues",
-              header: "Dues Remain",
-            },
-          ]}
-        />
-      </div>
+
+      <grid.Grid
+        data={formattedData}
+        columns={[
+          { field: "id", header: "ID" },
+          { field: "userName", header: "Member Name" },
+          { field: "userType", header: "Membership Type" },
+          { field: "bookName", header: "Book Name" },
+          { field: "issuedDate", header: "Issued Date" },
+          { field: "returnDate", header: "Return Date" },
+          { field: "renewStatusText", header: "Renew Status" },
+          { field: "renewDate", header: "Renew Date" },
+          { field: "isReturnedText", header: "Returned Status" },
+          { field: "dues", header: "Dues Remain" },
+          {
+            header: "Returned",
+            buttonCaption: "Change Return Status",
+            onClick: (row: Master.IssuedItem) =>
+              navigate(`/issued/return/${row.bookId}/${row.userId}`, {
+                state: { isReturned: row.isReturned },
+              }),
+          },
+          {
+            header: "Renewed",
+            buttonCaption: "Change Renew Status",
+            onClick: (row: Master.IssuedItem) =>
+              navigate(`/issued/renew/${row.bookId}/${row.userId}`, {
+                state: { isRenewed: row.renewStatus },
+              }),
+          },
+        ]}
+      />
     </div>
   );
 }

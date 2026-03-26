@@ -20,9 +20,9 @@ const schema = Joi.object({
   edition: Joi.string().required().min(1).max(50).messages({
     "string.empty": "Edition is required",
   }),
-  price: Joi.number().precision(2).required().min(0).messages({
+  price: Joi.number().precision(2).required().min(1).messages({
     "number.base": "Price must be a number",
-    "number.min": "Price cannot be negative",
+    "number.min": "Price can be minimum 1",
     "number.precision": "Price can have up to 2 decimal places",
   }),
   categoryName: Joi.string().required().messages({
