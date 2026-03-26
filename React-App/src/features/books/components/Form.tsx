@@ -17,9 +17,9 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
     useCategoriesForBooksQuery();
 
   return (
-    <div className="w-full max-w-xs">
+    <div className="w-full max-w-xs pt-5 pb-5">
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-yellow-100 shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-yellow-900"
         onSubmit={handleSubmit(async (data) => {
           const selectedCategory = categories.find(
             (c) => c.name === data.categoryName,

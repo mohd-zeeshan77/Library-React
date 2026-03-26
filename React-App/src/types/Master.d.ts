@@ -30,4 +30,18 @@ declare namespace Master {
     id: number;
     name: string;
   }
+  interface IssuedForm {
+    userName: string;
+    bookName: string;
+    dues: number;
+  }
+  interface IssuedItem extends IssuedForm {
+    id: number;
+    userType: string;
+    issuedDate: string;
+    returnDate: string;
+    renewStatus: boolean | null;
+    renewDate: string | null;
+    isReturned: boolean | null;
+  }
 }

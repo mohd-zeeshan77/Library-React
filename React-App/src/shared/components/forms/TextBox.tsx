@@ -8,8 +8,7 @@ interface TextBoxProps<TForm extends FieldValues> {
   onChange?: (v: string) => void;
   name?: Path<TForm>;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  control?: Control<TForm, any, TForm>;
+  control?: Control<TForm>;
   errorMessage?: string;
 }
 

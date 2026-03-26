@@ -17,9 +17,9 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
     useMembersForUsersQuery();
 
   return (
-    <div className="w-full max-w-xs">
+    <div className="w-full max-w-xs pt-5 pb-5">
       <form
-        className="bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
+        className="bg-yellow-100 shadow-md rounded px-8 pt-6 pb-8 mb-4 border border-yellow-900"
         onSubmit={handleSubmit(async (data) => {
           const selectedMember = members.find((c) => c.name === data.typeName);
           if (!selectedMember) {
@@ -55,7 +55,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           ) : (
             <select
               {...get("typeName").control.register(get("typeName").name)}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline bg-yellow-100"
             >
               <option value="">Select Category</option>
               {members.map((mem) => (

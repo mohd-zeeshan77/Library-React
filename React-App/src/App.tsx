@@ -11,13 +11,13 @@ export default function App() {
     <div className="min-h-screen bg-yellow-100">
       <nav className="bg-linear-to-r from-yellow-900 to-yellow-800 shadow-md">
         <div className="max-w-7xl px-5 py-4 flex gap-3 flex-wrap justify-between">
-          <div className="max-w-7xl px-5 py-4 flex gap-3 flex-wrap">
+          <div className="max-w-7xl px-5 py-4 flex gap-3 flex-wrap text-3xl">
             <Link to="/" className="text-white!">
               Home
             </Link>
           </div>
 
-          <div className="max-w-7xl px-5 py-4 flex gap-5 flex-wrap">
+          <div className="max-w-7xl px-5 py-4 flex gap-6 flex-wrap text-2xl">
             <Link to="/books" className="text-white!">
               Books
             </Link>
