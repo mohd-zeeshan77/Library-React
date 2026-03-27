@@ -38,10 +38,9 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
             userId: selectedUser.id,
             bookId: selectedBook.id,
           });
-          navigate("../list"); // redirect after submit
+          navigate("../list");
         })}
       >
-        {/* Users */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Members
@@ -66,7 +65,6 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
-        {/* Books */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Books
@@ -91,7 +89,6 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
-        {/* Buttons */}
         <div className="flex justify-between">
           <Button
             caption="Back"

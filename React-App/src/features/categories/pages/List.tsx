@@ -1,8 +1,8 @@
 import { Loader } from "../../../shared/components/loader";
-import * as grid from "../../../shared/components/grid";
 import { useCategoryQuery } from "../queries";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../../../shared/components/buttons";
+import { Grid } from "../../../shared/components/grid";
 
 export default function List() {
   const navigate = useNavigate();
@@ -29,8 +29,8 @@ export default function List() {
           onClick={() => navigate("../create")}
         />
       </div>
-      <div>
-        <grid.Grid
+      <div className="max-h-96 overflow-y-auto border border-gray-300 rounded">
+        <Grid
           data={data}
           columns={[
             {

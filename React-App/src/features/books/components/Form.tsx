@@ -2,6 +2,8 @@ import { useNavigate } from "react-router";
 import { useStateForm } from "./state.form";
 import { Button } from "../../../shared/components/buttons";
 import { useCategoryQuery } from "../../categories/queries";
+import TextBox from "../../../shared/components/forms/TextBox";
+import { Controller } from "react-hook-form";
 
 interface FormProps {
   onSubmit: (p: Master.BookForm & { categoryId: number }) => Promise<void>;
@@ -27,130 +29,54 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           if (!selectedCategory) {
             throw new Error("Please select a valid category");
           }
-
           await onSubmit({ ...data, categoryId: selectedCategory.id });
           navigate("../list");
         })}
       >
-        {/* Name */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Name
-          </label>
-          <input
-            type="text"
-            {...get("name").control.register(get("name").name)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          {errors.name && (
-            <div className="text-red-500">{errors.name.message}</div>
-          )}
-        </div>
+        <TextBox label="Name" {...get("name")} />
 
-        {/* Author */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Author Name
-          </label>
-          <input
-            type="text"
-            {...get("authorName").control.register(get("authorName").name)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          {errors.authorName && (
-            <div className="text-red-500">{errors.authorName.message}</div>
-          )}
-        </div>
+        <TextBox label="Author Name" {...get("authorName")} />
 
-        {/* Publisher */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Publisher
-          </label>
-          <input
-            type="text"
-            {...get("publisher").control.register(get("publisher").name)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          {errors.publisher && (
-            <div className="text-red-500">{errors.publisher.message}</div>
-          )}
-        </div>
+        <TextBox label="Publisher" {...get("publisher")} />
 
-        {/* Edition */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Edition
-          </label>
-          <input
-            type="text"
-            {...get("edition").control.register(get("edition").name)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          {errors.edition && (
-            <div className="text-red-500">{errors.edition.message}</div>
-          )}
-        </div>
+        <TextBox label="Edition" {...get("edition")} />
 
-        {/* Price */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Price
-          </label>
-          <input
-            type="number"
-            step="0.01"
-            {...get("price").control.register(get("price").name)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          {errors.price && (
-            <div className="text-red-500">{errors.price.message}</div>
-          )}
-        </div>
+        <TextBox label="Price" {...get("price")} />
 
-        {/* Category */}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Category
           </label>
+
           {loadingCategories ? (
             <div>Loading categories...</div>
           ) : (
-            <select
-              {...get("categoryName").control.register(
-                get("categoryName").name,
+            <Controller
+              control={get("categoryName").control}
+              name={get("categoryName").name}
+              render={({ field }) => (
+                <select
+                  {...field}
+                  className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                >
+                  <option value="">Select Category</option>
+                  {categories.map((cat) => (
+                    <option key={cat.id} value={cat.name}>
+                      {cat.name}
+                    </option>
+                  ))}
+                </select>
               )}
-              className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            >
-              <option value="">Select Category</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.name}>
-                  {cat.name}
-                </option>
-              ))}
-            </select>
+            />
           )}
+
           {errors.categoryName && (
             <div className="text-red-500">{errors.categoryName.message}</div>
           )}
         </div>
 
-        {/* Stock */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Stock
-          </label>
-          <input
-            type="number"
-            {...get("stock").control.register(get("stock").name)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          {errors.stock && (
-            <div className="text-red-500">{errors.stock.message}</div>
-          )}
-        </div>
+        <TextBox label="Stock" {...get("stock")} />
 
-        {/* Buttons */}
         <div className="flex justify-between">
           <Button
             caption="Back"

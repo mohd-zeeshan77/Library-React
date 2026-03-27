@@ -28,19 +28,15 @@ export function useNewIssuedMutation() {
         { bookId, userId },
       );
     },
-
     onSuccess: (result) => {
       if (!result) return;
-
       const existing = queryClient.getQueryData<Master.IssuedItem[]>(QUERY_KEY);
-
       if (!existing) return;
-
       queryClient.setQueryData(QUERY_KEY, [...existing, result]);
     },
   });
 }
-export function useReturnBookMutation() {
+export function useReturnBookMutation(bookId: number, userId: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -58,12 +54,20 @@ export function useReturnBookMutation() {
         { boolRequest: isReturned },
       );
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+    onSuccess: (result) => {
+      if (!result) return;
+      const existing = queryClient.getQueryData<Master.IssuedItem[]>(QUERY_KEY);
+      if (!existing) return;
+      const index = existing.findIndex(
+        (item) => item.bookId === bookId && item.userId === userId,
+      );
+      const first = existing.slice(0, index);
+      const next = existing.slice(index + 1);
+      queryClient.setQueryData(QUERY_KEY, [...first, result, ...next]);
     },
   });
 }
-export function useRenewBookMutation() {
+export function useRenewBookMutation(bookId: number, userId: number) {
   const queryClient = useQueryClient();
 
   return useMutation({
@@ -81,8 +85,29 @@ export function useRenewBookMutation() {
         { boolRequest: renewStatus },
       );
     },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
+    onSuccess: (result) => {
+      if (!result) return;
+      const existing = queryClient.getQueryData<Master.IssuedItem[]>(QUERY_KEY);
+      if (!existing) return;
+      const index = existing.findIndex(
+        (item) => item.bookId === bookId && item.userId === userId,
+      );
+      const first = existing.slice(0, index);
+      const next = existing.slice(index + 1);
+      queryClient.setQueryData(QUERY_KEY, [...first, result, ...next]);
     },
   });
+}
+export function useDeleteIssueMutation() {
+  const queryClient = useQueryClient();
+  const rs = useMutation({
+    mutationFn: (id: number) => ApiService.del(`issued/${id}`),
+    onSuccess: (_, id) => {
+      const data = queryClient.getQueryData<Master.IssuedItem[]>(QUERY_KEY);
+      if (!data) return;
+      const newData = data.filter((item) => item.id !== id);
+      queryClient.setQueryData(QUERY_KEY, newData);
+    },
+  });
+  return rs;
 }
