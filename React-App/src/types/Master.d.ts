@@ -35,7 +35,6 @@ declare namespace Master {
   interface IssuedForm {
     userName: string;
     bookName: string;
-    dues: number;
   }
   interface IssuedItem extends IssuedForm {
     id: number;

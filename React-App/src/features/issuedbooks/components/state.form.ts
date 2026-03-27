@@ -4,11 +4,6 @@ import { joiResolver } from "@hookform/resolvers/joi";
 import Joi from "joi";
 
 const schema = Joi.object({
-  dues: Joi.number().precision(2).required().min(0).messages({
-    "number.base": "Price must be a number",
-    "number.min": "Price cannot be negative",
-    "number.precision": "Price can have up to 2 decimal places",
-  }),
   userName: Joi.string().required().messages({
     "string.empty": "User is required",
   }),
@@ -23,7 +18,6 @@ export function useStateForm(onLoad?: () => Promise<Master.IssuedItem>) {
       defaultValues: {
         userName: "",
         bookName: "",
-        dues: 0,
       },
       resolver: joiResolver(schema),
     });
@@ -34,7 +28,6 @@ export function useStateForm(onLoad?: () => Promise<Master.IssuedItem>) {
         reset({
           userName: data?.userName ?? "",
           bookName: data?.bookName ?? "",
-          dues: data?.dues ?? 0,
         });
       });
     }

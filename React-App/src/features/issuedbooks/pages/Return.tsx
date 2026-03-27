@@ -9,11 +9,9 @@ export default function ReturnPage() {
   const location = useLocation();
   const returnMutation = useReturnBookMutation();
 
-  // Initialize state from navigation state (passed from List.tsx)
   const state = location.state as { isReturned?: boolean } | undefined;
   const [isReturned, setIsReturned] = useState(state?.isReturned ?? false);
 
-  // Redirect if missing info
   useEffect(() => {
     if (!bookId || !userId) {
       navigate("/issued");

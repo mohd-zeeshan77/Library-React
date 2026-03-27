@@ -91,22 +91,6 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           )}
         </div>
 
-        {/* Dues */}
-        <div className="mb-4">
-          <label className="block text-gray-700 text-sm font-bold mb-2">
-            Dues
-          </label>
-          <input
-            type="number"
-            step="0.01" // allows 2 decimal places
-            {...get("dues").control.register(get("dues").name)}
-            className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-          />
-          {errors.dues && (
-            <div className="text-red-500">{errors.dues.message}</div>
-          )}
-        </div>
-
         {/* Buttons */}
         <div className="flex justify-between">
           <Button

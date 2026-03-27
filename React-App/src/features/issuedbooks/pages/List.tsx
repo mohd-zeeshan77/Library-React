@@ -34,7 +34,6 @@ export default function List() {
         : item.isReturned
           ? "Returned"
           : "Not Returned",
-    dues: item.dues ?? "-",
   }));
 
   if (isLoading) return <Loader />;
@@ -62,7 +61,6 @@ export default function List() {
           { field: "renewStatusText", header: "Renew Status" },
           { field: "renewDate", header: "Renew Date" },
           { field: "isReturnedText", header: "Returned Status" },
-          { field: "dues", header: "Dues Remain" },
           {
             header: "Returned",
             buttonCaption: "Return",

@@ -29,7 +29,6 @@ export default function Create() {
           await mutateAsync({
             userId: selectedUser.id,
             bookId: selectedBook.id,
-            dues: issued.dues,
           });
         }}
       />
