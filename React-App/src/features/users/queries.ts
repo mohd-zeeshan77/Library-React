@@ -32,11 +32,22 @@ export function useNewUserMutation() {
   });
 }
 const MEMBER_KEY = ["@members"];
-export function useMembersForUsersQuery() {
+export function useMembersQuery() {
   return useQuery({
     queryKey: MEMBER_KEY,
     queryFn: async () => {
-      return await ApiService.get<Master.MemberTypeDto[]>("members");
+      return await ApiService.get<Master.MemberItem[]>("members");
+    },
+  });
+}
+export function useMemberTypeMutation() {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: async ({ id, memberId }: { id: number; memberId: number }) => {
+      return await ApiService.patch(`users/userid/${id}`, { memberId });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: QUERY_KEY });
     },
   });
 }

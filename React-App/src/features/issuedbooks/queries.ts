@@ -19,15 +19,15 @@ export function useNewIssuedMutation() {
     mutationFn: async ({
       bookId,
       userId,
-      dues,
+      issued,
     }: {
-      userId: number;
       bookId: number;
-      dues: number;
+      userId: number;
+      issued: Master.IssuedForm;
     }) => {
       return await ApiService.post<Master.IssuedItem>(
         `issued/book/${bookId}/user/${userId}`,
-        { dues },
+        { issued },
       );
     },
 

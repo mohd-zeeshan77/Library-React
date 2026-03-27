@@ -26,9 +26,11 @@ declare namespace Master {
   interface UserItems extends UserForm {
     id: number;
   }
-  interface MemberTypeDto {
-    id: number;
+  interface MemberForm {
     name: string;
+  }
+  interface MemberItem extends MemberForm {
+    id: number;
   }
   interface IssuedForm {
     userName: string;

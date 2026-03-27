@@ -1,10 +1,11 @@
+import { useCategoryQuery } from "../../categories/queries";
 import Form from "../components/Form";
-import { useNewBookMutation, useCategoriesForBooksQuery } from "../queries";
+import { useNewBookMutation } from "../queries";
 
 export default function Create() {
   const { mutateAsync } = useNewBookMutation();
 
-  const { data: categories = [] } = useCategoriesForBooksQuery();
+  const { data: categories = [] } = useCategoryQuery();
 
   return (
     <div>

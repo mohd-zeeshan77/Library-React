@@ -65,7 +65,7 @@ export default function List() {
           { field: "dues", header: "Dues Remain" },
           {
             header: "Returned",
-            buttonCaption: "Change Return Status",
+            buttonCaption: "Return",
             onClick: (row: Master.IssuedItem) =>
               navigate(`/issued/return/${row.bookId}/${row.userId}`, {
                 state: { isReturned: row.isReturned },
@@ -73,7 +73,7 @@ export default function List() {
           },
           {
             header: "Renewed",
-            buttonCaption: "Change Renew Status",
+            buttonCaption: "Renew",
             onClick: (row: Master.IssuedItem) =>
               navigate(`/issued/renew/${row.bookId}/${row.userId}`, {
                 state: { isRenewed: row.renewStatus },

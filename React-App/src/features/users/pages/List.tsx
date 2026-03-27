@@ -36,6 +36,13 @@ export default function List() {
               field: "typeName",
               header: "Member Type",
             },
+            {
+              header: "Change Member Type",
+              buttonCaption: "Change Type",
+              onClick: (row: Master.UserItems) => {
+                navigate(`../membertype/${row.id}`);
+              },
+            },
           ]}
         />
       </div>

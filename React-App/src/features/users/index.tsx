@@ -1,6 +1,7 @@
 import { Navigate, Route, Routes } from "react-router";
 import List from "./pages/List";
 import Create from "./pages/Create";
+import MemberType from "./pages/MemberType";
 
 export default function Users() {
   return (
@@ -9,6 +10,7 @@ export default function Users() {
         <Route index element={<Navigate to="list" />} />
         <Route path="list" element={<List />} />
         <Route path="create" element={<Create />} />
+        <Route path="membertype/:id" element={<MemberType />} />
       </Routes>
     </div>
   );

@@ -1,9 +1,9 @@
 import Form from "../components/Form";
-import { useNewUserMutation, useMembersForUsersQuery } from "../queries";
+import { useNewUserMutation, useMembersQuery } from "../queries";
 
 export default function Create() {
   const { mutateAsync } = useNewUserMutation();
-  const { data: members = [] } = useMembersForUsersQuery();
+  const { data: members = [] } = useMembersQuery();
 
   return (
     <div>

@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router";
-import { useMembersForUsersQuery } from "../queries";
+import { useMembersQuery } from "../queries";
 import { useStateForm } from "./state.form";
 import { Button } from "../../../shared/components/buttons";
 
@@ -13,8 +13,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
   const { get, handleSubmit, submitting, errors } = useStateForm(onLoad);
   const navigate = useNavigate();
 
-  const { data: members = [], isLoading: loadingMembers } =
-    useMembersForUsersQuery();
+  const { data: members = [], isLoading: loadingMembers } = useMembersQuery();
 
   return (
     <div className="w-full max-w-xs pt-5 pb-5">

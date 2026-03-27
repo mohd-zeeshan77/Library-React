@@ -28,9 +28,9 @@ const schema = Joi.object({
   categoryName: Joi.string().required().messages({
     "string.empty": "Category is required",
   }),
-  stock: Joi.number().required().min(0).messages({
+  stock: Joi.number().required().min(1).messages({
     "number.base": "Stock must be a number",
-    "number.min": "Stock cannot be negative",
+    "number.min": "Stock cannot be negative or 0",
   }),
 });
 

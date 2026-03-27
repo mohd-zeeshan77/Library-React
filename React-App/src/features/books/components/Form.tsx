@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router";
-import { useCategoriesForBooksQuery } from "../queries";
 import { useStateForm } from "./state.form";
 import { Button } from "../../../shared/components/buttons";
+import { useCategoryQuery } from "../../categories/queries";
 
 interface FormProps {
   onSubmit: (p: Master.BookForm & { categoryId: number }) => Promise<void>;
@@ -14,7 +14,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
   const navigate = useNavigate();
 
   const { data: categories = [], isLoading: loadingCategories } =
-    useCategoriesForBooksQuery();
+    useCategoryQuery();
 
   return (
     <div className="w-full max-w-xs pt-5 pb-5">
@@ -29,7 +29,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           }
 
           await onSubmit({ ...data, categoryId: selectedCategory.id });
-          navigate("../list"); // redirect after submit
+          navigate("../list");
         })}
       >
         {/* Name */}
@@ -99,7 +99,7 @@ export default function Form({ onLoad, onSubmit, submitCaption }: FormProps) {
           </label>
           <input
             type="number"
-            step="0.01" // allows 2 decimal places
+            step="0.01"
             {...get("price").control.register(get("price").name)}
             className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           />
